@@ -1,6 +1,6 @@
-function [V] = computeV(gammas, tangents, N)
+function [V] = computeV(gammas, N)
     V = zeros(N,2);
     for i = 1:1:N
-       V(i,:) = gammas(i) .*tangents; 
+       V(i,:) = abs(gammas(i)); 
     end
 end

@@ -6,23 +6,23 @@ switch opts
         x_node_glob = zeros(N+1,1);
         z_node_glob = zeros(N+1,1);
 
-        x_c_glob = zeros(N+1,1);
-        z_c_glob = zeros(N+1,1);
-        l_j = zeros(N+1,1); 
+        x_c_glob = zeros(N,1);
+        z_c_glob = zeros(N,1);
+        l_j = zeros(N,1); 
 
-        normals = zeros(N+1,2);
-        tangents = zeros(N+1,2);
+        normals = zeros(N,2);
+        tangents = zeros(N,2);
 
 
         beta = 0:2*pi/N:2*pi;
         delta_beta = 2*pi/N;
        
-        for j = 0:1:N+1
+        for j = 0:1:N
             
             x_node_glob(j+1) = (D/2) * cos(delta_beta*j);
             z_node_glob(j+1) = -(D/2) * sin(delta_beta*j);
         end   
-        for j = 1:1:N+1
+        for j = 1:1:N-1
             
             x_c_glob(j) = (x_node_glob(j+1)+x_node_glob(j))/2;
             z_c_glob(j) = (z_node_glob(j+1)+z_node_glob(j))/2;
