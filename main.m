@@ -1,7 +1,7 @@
 clear; close all
 %% Geometry & initialization: %%
 D = 2;
-N = 20;
+N = 128;
 Q_inf = [1,0];
 kuttaChange = ceil(N / 4);
 geometry = 'given';
