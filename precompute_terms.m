@@ -11,34 +11,24 @@ for i = 1:1:N
          z_c_pan = (x_c_glob(i)-x_node_glob(j))*normals(j,1)...
          + (z_c_glob(i)-z_node_glob(j))*normals(j,2);
         
-%         x_c_pan = (x_node_glob(i)-x_c_glob(j))*normals(j,2)...
-%         - (z_node_glob(i)-z_c_glob(j))*normals(j,1);
-%         z_c_pan = (x_node_glob(i)-x_c_glob(j))*normals(j,1)...
-%         + (z_node_glob(i)-z_c_glob(j))*normals(j,2);
-
-
-        r1 = sqrt(x_c_pan^2 + z_c_pan^2); 
-        theta1 = atan2(z_c_pan,-x_c_pan+l_j(j));
-        r2 = sqrt((x_c_pan-l_j(j))^2 + z_c_pan^2);
+        r1 = sqrt((x_c_pan-l_j(j))^2 + z_c_pan^2); 
+        theta1 = atan2(z_c_pan,l_j(j)-x_c_pan);
+        r2 = sqrt(x_c_pan^2 + z_c_pan^2);
         theta2 = atan2(z_c_pan,-x_c_pan);
-        if i == j
+        if j==i
             theta1 = 0.0;
             theta2 = -pi;
         end
 
-        w_hat_loc = (1/(4*pi)) * log((r1^2)/(r2^2));
         u_hat_loc = (theta2-theta1)/ (2*pi);
-%-------------------------
-        rotMat=[normals(1,2) normals(1,1);
-            -normals(1,1) normals(1,2)];
-%{
-        u_hat_glob = u_hat_loc * normals(j,2)+ w_hat_loc * normals(j,1);
-        w_hat_glob = -u_hat_loc * normals(j,1)+ w_hat_loc * normals(j,2);
-        V_hat(i,:,j) =  [u_hat_glob w_hat_glob];
-%}
+        w_hat_loc = (1/(4*pi)) * log((r2^2)/(r1^2));
+        
+        rotMat = [normals(1,2) normals(1,1); -normals(1,1) normals(1,2)];
+        
         V_hat(i,:,j) =  rotMat * [u_hat_loc w_hat_loc]';
 
         a(i,j) = dot(V_hat(i,:,j), tangents(j,:)); 
         
     end
+end
 end
