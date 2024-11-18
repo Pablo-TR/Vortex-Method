@@ -11,10 +11,10 @@ for i = 1:1:N
          z_c_pan = (x_c_glob(i)-x_node_glob(j))*normals(j,1)...
          + (z_c_glob(i)-z_node_glob(j))*normals(j,2);
         
-        r1 = sqrt((x_c_pan-l_j(j))^2 + z_c_pan^2); 
-        theta1 = atan2(z_c_pan,l_j(j)-x_c_pan);
-        r2 = sqrt(x_c_pan^2 + z_c_pan^2);
-        theta2 = atan2(z_c_pan,-x_c_pan);
+        r1 = sqrt((x_c_pan)^2 + z_c_pan^2); 
+        theta1 = atan2(z_c_pan,x_c_pan);
+        r2 = sqrt((x_c_pan-l_j(j))^2 + z_c_pan^2);
+        theta2 = atan2(z_c_pan,x_c_pan-l_j(j));
         if i==j
             theta1 = 0.0;
             theta2 = -pi;
