@@ -1,10 +1,15 @@
-function [NACA15_Data, NACA22_Data, num_nodes_NACA15, num_nodes_NACA22] = read_data(data1_15, data2_15, data3_15, data4_15, data5_15,...
-    data1_22, data2_22, data3_22, data4_22, data5_22, options)
+function [NACA_Data, num_nodes_NACA] = read_data(options)
 
 % Switch to concatenate tables based on the selected option
 switch options
     case 'NACA0015'
         
+        data1_15=readtable('NACA0015/NACA0015_N_32.txt');
+        data2_15=readtable('NACA0015/NACA0015_N_64.txt');
+        data3_15=readtable('NACA0015/NACA0015_N_128.txt');
+        data4_15=readtable('NACA0015/NACA0015_N_256.txt');
+        data5_15=readtable('NACA0015/NACA0015_N_512.txt');
+
         % Determine the maximum number of rows
         maxRows = max([height(data1_15), height(data2_15), height(data3_15), height(data4_15), height(data5_15)]);
         
@@ -23,25 +28,31 @@ switch options
         data5 = array2table(data5);
         
         % Define the tables in a cell array for easy iteration
-        NACA15_Data = {data1, data2, data3, data4, data5};
+        NACA_Data = {data1, data2, data3, data4, data5};
         
         % Create a vector to store the number of valid rows in each table
-        num_nodes_NACA15 = zeros(1, length(NACA15_Data));
+        num_nodes_NACA = zeros(1, length(NACA_Data));
         
         % Loop to count valid rows in the first column of each table
-        for i = 1:length(NACA15_Data)
+        for i = 1:length(NACA_Data)
             % Select the first column of the current table
-            first_column = NACA15_Data{i}{:, 1};
+            first_column = NACA_Data{i}{:, 1};
             
             % Count the rows that are not NaN in the first column
-            num_nodes_NACA15(i) = sum(~isnan(first_column));
+            num_nodes_NACA(i) = sum(~isnan(first_column));
         end
         
         % Display the result
         disp('Number of nodes for each case with the NACA 0015:');
-        disp(num_nodes_NACA15);
+        disp(num_nodes_NACA);
 
     case 'NACA22112'
+
+        data1_22=readtable('NACA22112/NACA_22112_N_32.txt');
+        data2_22=readtable('NACA22112/NACA_22112_N_64.txt');
+        data3_22=readtable('NACA22112/NACA_22112_N_128.txt');
+        data4_22=readtable('NACA22112/NACA_22112_N_256.txt');
+        data5_22=readtable('NACA22112/NACA_22112_N_512.txt');
 
         % Determine the maximum number of rows
         maxRows = max([height(data1_22), height(data2_22), height(data3_22), height(data4_22), height(data5_22)]);
@@ -61,23 +72,23 @@ switch options
         data5 = array2table(data5);
 
         % Define the tables in a cell array for easy iteration
-        NACA22_Data = {data1, data2, data3, data4, data5};
+        NACA_Data = {data1, data2, data3, data4, data5};
         
         % Create a vector to store the number of valid rows in each table
-        num_nodes_NACA22 = zeros(1, length(NACA22_Data));
+        num_nodes_NACA = zeros(1, length(NACA_Data));
         
         % Loop to count valid rows in the first column of each table
-        for i = 1:length(NACA22_Data)
+        for i = 1:length(NACA_Data)
             % Select the first column of the current table
-            first_column = NACA22_Data{i}{:, 1};
+            first_column = NACA_Data{i}{:, 1};
             
             % Count the rows that are not NaN in the first column
-            num_nodes_NACA22(i) = sum(~isnan(first_column));
+            num_nodes_NACA(i) = sum(~isnan(first_column));
         end
         
         % Display the result
         disp('Number of nodes for each case with the NACA 22112:');
-        disp(num_nodes_NACA22);
+        disp(num_nodes_NACA);
 end
 end
 

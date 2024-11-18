@@ -1,8 +1,10 @@
 function [beta,x_node_glob, z_node_glob, x_c_glob, z_c_glob, l_j, normals, tangents] = discretize_geometry(D, N, opts)
 switch opts
-    case 'read' %% Read from csv
-        [NACA15_Data, NACA22_Data, num_nodes_NACA15, num_nodes_NACA22] = read_data(data1_15, data2_15, data3_15, data4_15, data5_15,...
-    data1_22, data2_22, data3_22, data4_22, data5_22, options)
+    case 'NACA0015' %% Read from csv
+        [NACA_Data15, num_nodes_NACA15] = read_data('NACA0015');
+
+    case 'NACA22112'
+        [NACA_Data22, num_nodes_NACA22] = read_data('NACA22112');
     otherwise %% Discretize from given geometry (EX 1 -> cylinder)
         x_node_glob = zeros(N+1,1);
         z_node_glob = zeros(N+1,1);
