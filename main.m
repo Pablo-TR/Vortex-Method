@@ -1,7 +1,7 @@
 %MAIN
 clear all, close all
-D = 1;
-N = 320;
+D = 2;
+N = 100;
 Q_inf = [1,0];
 kuttaChange = 10;
 geometry = 'given';

@@ -18,9 +18,9 @@ for i = 1:1:N
 
 
         r1 = sqrt(x_c_pan^2 + z_c_pan^2); 
-        theta1 = atan2(z_c_pan,-x_c_pan+l_j(j));
+        theta1 = atan2(z_c_pan,x_c_pan);
         r2 = sqrt((x_c_pan-l_j(j))^2 + z_c_pan^2);
-        theta2 = atan2(z_c_pan,-x_c_pan);
+        theta2 = atan2(z_c_pan,x_c_pan-l_j(j));
         if i == j
             theta1 = 0.0;
             theta2 = -pi;
@@ -28,9 +28,9 @@ for i = 1:1:N
 
         w_hat_loc = (1/(4*pi)) * log((r1^2)/(r2^2));
         u_hat_loc = (theta2-theta1)/ (2*pi);
-%-------------------------
-        rotMat=[normals(1,2) normals(1,1);
-            -normals(1,1) normals(1,2)];
+
+        rotMat=[normals(j,2) normals(j,1);
+            -normals(j,1) normals(j,2)];
 %{
         u_hat_glob = u_hat_loc * normals(j,2)+ w_hat_loc * normals(j,1);
         w_hat_glob = -u_hat_loc * normals(j,1)+ w_hat_loc * normals(j,2);
