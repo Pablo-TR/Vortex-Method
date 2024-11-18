@@ -6,10 +6,16 @@ V_hat = zeros(N,2,N);
 for i = 1:1:N
     b(i) = -Q_inf * transpose(tangents(N,:));
     for j = 1:1:N
-        x_c_pan = (x_c_glob(i)-x_node_glob(j))*normals(j,2)...
-        - (z_c_glob(i)-z_node_glob(j))*normals(j,1);
-        z_c_pan = (x_c_glob(i)-x_node_glob(j))*normals(j,1)...
-        + (z_c_glob(i)-z_node_glob(j))*normals(j,2);
+         x_c_pan = (x_c_glob(i)-x_node_glob(j))*normals(j,2)...
+         - (z_c_glob(i)-z_node_glob(j))*normals(j,1);
+         z_c_pan = (x_c_glob(i)-x_node_glob(j))*normals(j,1)...
+         + (z_c_glob(i)-z_node_glob(j))*normals(j,2);
+        
+%         x_c_pan = (x_node_glob(i)-x_c_glob(j))*normals(j,2)...
+%         - (z_node_glob(i)-z_c_glob(j))*normals(j,1);
+%         z_c_pan = (x_node_glob(i)-x_c_glob(j))*normals(j,1)...
+%         + (z_node_glob(i)-z_c_glob(j))*normals(j,2);
+
 
         r1 = sqrt(x_c_pan^2 + z_c_pan^2); 
         theta1 = atan2(z_c_pan,x_c_pan);
