@@ -1,17 +1,39 @@
 clear; close all
 %% Read data: %%
-[NACA_Data, nodes_NACA] = read_data('NACA0015');
+[NACA_Data, nodes_NACA] = read_data('NACA22112');
 
 %% Geometry & initialization: %%
 D = 2;
-N = nodes_NACA(3)-1; %128 cylinder; nodes_NACA(3)
+N = 0; %128 cylinder; nodes_NACA(3)
 Q_inf = [1,0];
 kuttaChange = ceil(N / 4);
-geometry = 'given';
+lv = 1;
+lh = 7.5;
+d = 0.02;
+geometry = 'read';
+plotGeometry = true;
+
 
 %% Called functions: %%
-[distance, x_nod, z_nod, x_c_glob, z_c_glob, l_j, normals, tangents] = discretize_geometry(D, N,NACA_Data,'readf');
-[a,b, ~] = precompute_terms(normals, tangents, N, Q_inf, x_c_glob, z_c_glob, x_nod,z_nod, l_j);
+[NACA_Data, nodes_NACA] = read_data('NACA0015');
+N_W = nodes_NACA(3);
+[dWing, xnWing, znWing, xcWing, zcWing, ljWing, normalsWing, tangentsWing] = discretize_geometry(D, N_W,NACA_Data,geometry,plotGeometry);
+
+ 
+[NACA_Data, nodes_NACA] = read_data('NACA22112');
+N_HTP = nodes_NACA(3);
+[dHTP, xnHTP, znHTP, xcHTP, zcHTP, ljHTP, normalsHTP, tangentsHTP] = discretize_geometry(D, N_HTP,NACA_Data,geometry,plotGeometry);
+
+figure;
+plot(xnWing,znWing);
+hold on
+plot(xnHTP+lh, znHTP+lv)
+
+[A11,b11, ~] = precompute_terms(normalsWing, tangentsWing, N_W, Q_inf, xcWing, zcWing, xnWing,znWing, ljWing);
+[A12,b12, ~] = precompute_terms(normalsWing, tangentsWing, N_W, Q_inf, xcHTP, zcHTP, xnWing,znWing, ljWing);
+[A21,b21, ~] = precompute_terms(normalsHTP, tangentsHTP, N_HTP, Q_inf, xcWing, zcWing, xnHTP,znHTP, ljHTP);
+[A22,b22, ~] = precompute_terms(normalsHTP, tangentsHTP, N_HTP, Q_inf, xcHTP, zcHTP, xnHTP,znHTP, ljHTP);
+
 [a,b] = applyKuttaCondition(kuttaChange, a, b);
 gammas = solveVortexStrength(a,b, kuttaChange);
 [V] = computeV(gammas, N, tangents);
@@ -19,11 +41,8 @@ cp = computeCP(gammas, Q_inf, N);
 
 %% Plots: %%
 
-figure;
-plot(x_c_glob, z_c_glob, '-o');
+
 %hold on
-axis equal
-grid on
 %ylim([-1 1])
 %plot(x_nod, z_nod, '-o');
 

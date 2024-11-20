@@ -3,9 +3,9 @@ b = zeros(N,1);
 a = zeros(N,N);
 V_hat = zeros(N,2,N);
 
-for i = 1:1:N
+for i = 1:1:N-1
     b(i) = -Q_inf * transpose(tangents(i,:));
-    for j = 1:1:N
+    for j = 1:1:N-1
          x_c_pan = (x_c_glob(i)-x_node_glob(j))*normals(j,2)...
          - (z_c_glob(i)-z_node_glob(j))*normals(j,1);
          z_c_pan = (x_c_glob(i)-x_node_glob(j))*normals(j,1)...
