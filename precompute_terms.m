@@ -1,7 +1,7 @@
 function [a,b, V_hat] = precompute_terms(normals, tangents, N, Q_inf, x_c_glob, z_c_glob, x_node_glob, z_node_glob, l_j)
-b = zeros(N,1);
-a = zeros(N,N);
-V_hat = zeros(N,2,N);
+b = zeros(N-1,1);
+a = zeros(N-1,N-1);
+V_hat = zeros(N-1,2,N-1);
 
 for i = 1:1:N-1
     b(i) = -Q_inf * transpose(tangents(i,:));

@@ -4,9 +4,9 @@ clear; close all
 
 %% Geometry & initialization: %%
 D = 2;
-N = 0; %128 cylinder; nodes_NACA(3)
+N_W = nodes_NACA(3);
 Q_inf = [1,0];
-kuttaChange = ceil(N / 4);
+kuttaChange = ceil(N_W / 4);
 lv = 1;
 lh = 7.5;
 d = 0.02;
@@ -16,7 +16,6 @@ plotGeometry = true;
 
 %% Called functions: %%
 [NACA_Data, nodes_NACA] = read_data('NACA0015');
-N_W = nodes_NACA(3);
 [dWing, xnWing, znWing, xcWing, zcWing, ljWing, normalsWing, tangentsWing] = discretize_geometry(D, N_W,NACA_Data,geometry,plotGeometry);
 
  
@@ -34,10 +33,10 @@ plot(xnHTP+lh, znHTP+lv)
 [A21,b21, ~] = precompute_terms(normalsHTP, tangentsHTP, N_HTP, Q_inf, xcWing, zcWing, xnHTP,znHTP, ljHTP);
 [A22,b22, ~] = precompute_terms(normalsHTP, tangentsHTP, N_HTP, Q_inf, xcHTP, zcHTP, xnHTP,znHTP, ljHTP);
 
-[a,b] = applyKuttaCondition(kuttaChange, a, b);
-gammas = solveVortexStrength(a,b, kuttaChange);
-[V] = computeV(gammas, N, tangents);
-cp = computeCP(gammas, Q_inf, N);
+[A11,b11] = applyKuttaCondition(kuttaChange, A11, b11);
+gammas = solveVortexStrength(A11,b11, kuttaChange);
+[V] = computeV(gammas, N_W, tangentsWing);
+cp = computeCP(gammas, Q_inf, N_W);
 
 %% Plots: %%
 
@@ -77,5 +76,6 @@ xlim([0 1])
 title('Distribution of $\gamma$','FontSize',18,'Interpreter','latex')
 xlabel('$\theta$ [$^\circ$]','FontSize',16,'Interpreter','latex')
 ylabel('$\gamma$ [-]','FontSize',16,'Interpreter','latex')
+
 
 
