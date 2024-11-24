@@ -1,7 +1,7 @@
 function [cp, Cl, Cm] = computePart1(normalsWing, tangentsWing, N_W, xcWing, zcWing, xnWing,znWing, ljWing, alphas, Q_mod,c)
 
-Laitone = @(Cp0, M_inf) Cp0 / (sqrt(1 - M_inf^2) + (Cp0 / 2) * (M_inf^2 / sqrt(1 - M_inf^2)) * ...
-        (1 + (1.4 - 1) *0.5* M_inf^2));
+Laitone = @(Cp0, M_inf) Cp0 ./ (sqrt(1 - M_inf^2) + (Cp0 / 2) * M_inf^2 / sqrt(1 - M_inf^2) * ...
+        (1 + (1.4 - 1) / 2 * M_inf^2));
 Cp_star = @(M_inf) (2 / (1.4 * M_inf^2)) * (((2 + (1.4 - 1) * M_inf^2) / (1 + 1.4))^(1.4 / (1.4 - 1)) - 1);
 
 cp  = zeros(length(alphas),N_W-1);
@@ -31,13 +31,13 @@ alphas_crit = [0 2 4];
 M_crit = zeros(length(alphas_crit), 1);
 
 %Bolzano for Laitone's M_crit equation
-f = @(Cp0, M_crit) Cp_star(M_crit)-Laitone(Cp0,M_crit);
+f = @(Cp0, M_crit) Laitone(Cp0,M_crit) - Cp_star(M_crit);
 for i = 1:1:length(alphas_crit)
-    M_a = 0.1;
-    M_b = 0.99;
+    M_a = 0.3;
+    M_b = 0.95;
     M_c = 0.5*(M_a+M_b);
     Cp0 = min(cp(i,:));
-    while abs(f(Cp0, M_c)) > 0.00000001
+    while abs(f(Cp0, M_c)) > 0.00001
         M_c = (M_b+M_a)*0.5;
         if f(Cp0, M_c)*f(Cp0,M_a)<0
             M_b = M_c;

@@ -1,5 +1,5 @@
 function  [Ak, bk, A, b, gammas] = applyVortexMethod(Q_inf, normals, tangents,N, xc, zc, xn,zn, lj)
-kuttaChange = ceil(N / 4);
+kuttaChange = 33;
   
 
 [A,b, ~] = precompute_terms(normals, tangents, N, Q_inf, xc, zc, xn,zn, lj);
