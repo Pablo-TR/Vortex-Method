@@ -1,4 +1,4 @@
-function [a,b, V_hat] = precompute_terms(normals, tangents, N, Q_inf, x_c_glob, z_c_glob, x_node_glob, z_node_glob, l_j)
+function [a,b, V_hat] = precompute_terms(normals, tangents, N, Q_inf, x_c_glob, z_c_glob, x_node_glob, z_node_glob, l_j, interference)
 b = zeros(N-1,1);
 a = zeros(N-1,N-1);
 
@@ -15,7 +15,7 @@ for i = 1:1:N-1
         r2 = sqrt((x_c_pan-l_j(j))^2 + z_c_pan^2);
         theta2 = atan2(z_c_pan,x_c_pan-l_j(j));
         
-        if i==j
+        if i==j && interference == 0 
             theta1 = 0.0;
             theta2 = -pi;
         end

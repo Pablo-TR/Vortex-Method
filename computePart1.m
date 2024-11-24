@@ -1,8 +1,14 @@
-function [cp, Cl, Cm] = computePart1(normalsWing, tangentsWing, N_W, xcWing, zcWing, xnWing,znWing, ljWing, alphas, Q_mod,c)
+function [cp, Cl, Cm] = computePart1(NACA_Data,nodes_NACA, alphas, Q_mod,c, txtN, D,geometry, plotGeometry)
 
 Laitone = @(Cp0, M_inf) Cp0 / (sqrt(1 - M_inf^2) + (Cp0 / 2) * (M_inf^2 / sqrt(1 - M_inf^2)) * ...
         (1 + (1.4 - 1) *0.5* M_inf^2));
 Cp_star = @(M_inf) (2 / (1.4 * M_inf^2)) * (((2 + (1.4 - 1) * M_inf^2) / (1 + 1.4))^(1.4 / (1.4 - 1)) - 1);
+
+N_W = nodes_NACA(txtN);
+[~, xnWing, znWing, xcWing, zcWing, ljWing, normalsWing, tangentsWing] = discretize_geometry(D, N_W,NACA_Data,geometry,plotGeometry, txtN,c);
+
+kuttaChange = 33;
+
 
 cp  = zeros(length(alphas),N_W-1);
 Cl  = zeros(length(alphas),1);
@@ -11,7 +17,7 @@ Cm  = zeros(length(alphas),1);
 for i = 1:1:length(alphas)
     alpha = alphas(i);
     Q_inf = Q_mod.*[cos(deg2rad(alpha)) sin(deg2rad(alpha))];
-    [Ak,Bk,A,b,gammas] = applyVortexMethod(Q_inf, normalsWing, tangentsWing,N_W, xcWing, zcWing, xnWing,znWing, ljWing);
+    [Ak,Bk,A,b,gammas] = applyVortexMethod(Q_inf, normalsWing, tangentsWing,N_W, xcWing, zcWing, xnWing,znWing, ljWing, kuttaChange,0);
     cp(i,:) = computeCP(gammas, Q_inf);
     Cl(i) = computeCl(gammas, ljWing,Q_inf,c);
     Cm(i) = computeCm(cp(i,:), xcWing, zcWing,xnWing, znWing, c);

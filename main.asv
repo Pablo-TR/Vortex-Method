@@ -17,22 +17,18 @@ d = 0.02;
 c1 = 0.63;
 c2 = 0.35;
 deltas = [0 4 8 12 16];
+txtN = 3;
 %For part 3
 lv = 1;
 lh = 7.5;
 
 %% Called functions: %%
-[NACA_Data, nodes_NACA] = read_data('NACA0015');
-N_W = nodes_NACA(3);
-[dWing, xnWing, znWing, xcWing, zcWing, ljWing, normalsWing, tangentsWing] = discretize_geometry(D, N_W,NACA_Data,geometry,plotGeometry);
 
- 
 [NACA_Data, nodes_NACA] = read_data('NACA22112');
-N_HTP = nodes_NACA(3);
-[dHTP, xnHTP, znHTP, xcHTP, zcHTP, ljHTP, normalsHTP, tangentsHTP] = discretize_geometry(D, N_HTP,NACA_Data,geometry,plotGeometry);
 
-computePart1(normalsHTP, tangentsHTP, N_HTP, xcHTP, zcHTP, xnHTP,znHTP, ljHTP, alphas, Q_mod,c)
-computePart2(normalsWing, tangentsWing, N_W, xcWing, zcWing, xnWing,znWing, ljWing, alphas, Q_mod,c1,c2,deltas, d)
+
+computePart1(NACA_Data,nodes_NACA, alphas, Q_mod,c,txtN,D, geometry, plotGeometry)
+computePart2(normalsWing, tangentsWing, N_W, xcWing, zcWing, xnWing,znWing, ljWing, alphas, Q_mod,c1,c2,deltas, d, kuttaC)
 
 
 
