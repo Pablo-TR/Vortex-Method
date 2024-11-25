@@ -8,20 +8,21 @@ cp1  = zeros(length(alphas),2*(N-1));
 Cl1  = zeros(length(alphas),1);
 Cm1  = zeros(length(alphas),1);
 
-kuttaChange = floor((N+1)/4);
+kuttaChange = floor((N)/4);
 
 cdef = c1+c2+d;
 
 for i = 1:1:length(alphas)
     interference = 1;
     alpha = alphas(i);
-    delta = 4;
+    delta = 0;
     tangents2 = tangents2_orig;
     normals2 = normals2_orig;
     [xc2, zc2] = computeElevatorCoords(delta, xc2_orig, zc2_orig, d, c1);
     [xn2, zn2] = computeElevatorCoords(delta, xn2_orig, zn2_orig, d, c1);
 
-    [cp1(i,:), Cl1(i), Cm1(i)] = computeAerodynamicParams(alpha,xc, zc, xn, zn, xc2, zc2, xn2, zn2,normals, tangents, normals2, tangents2, N, lj1,lj2, Q_mod, cdef, kuttaChange, interference);
+    [cp1(i,:), Cl1(i), Cm1(i)] = computeAerodynamicParams(alpha,xc, zc, xn, zn, xc2, zc2,...
+        xn2, zn2,normals, tangents, normals2, tangents2, N, lj1,lj2, Q_mod, cdef, kuttaChange, interference);
     
 end
 
@@ -30,6 +31,7 @@ Cl2  = zeros(length(alphas),1);
 Cm2  = zeros(length(alphas),1);
 
 for i = 1:1:length(deltas)
+
     interference = 1;
     alpha = 4;
     delta = deg2rad(deltas(i));
@@ -41,7 +43,6 @@ for i = 1:1:length(deltas)
     [cp2(i,:), Cl2(i), Cm2(i)] = computeAerodynamicParams(alpha,xc, zc, xn, zn, xc2, zc2, xn2, zn2,normals, tangents, normals2, tangents2, N, lj1, lj2, Q_mod, cdef, kuttaChange, interference);
 
 end
-
 
 
 

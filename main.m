@@ -17,7 +17,7 @@ d = 0.02;
 c1 = 0.63;
 c2 = 0.35;
 deltas = [0 4 8 12 16];
-txtN = 3;
+txtN = 2;
 %For part 3
 lv = 1;
 lh = 7.5;
@@ -27,7 +27,7 @@ lh = 7.5;
 [NACA_Data, nodes_NACA] = read_data('NACA0015');
 
 
-computePart1(NACA_Data,nodes_NACA, alphas, Q_mod,c,txtN,D, geometry, plotGeometry)
+%computePart1(NACA_Data,nodes_NACA, alphas, Q_mod,c,txtN,D, geometry, plotGeometry)
 
 [NACA_Data, nodes_NACA] = read_data('NACA0015');
 computePart2(NACA_Data,nodes_NACA, alphas, Q_mod,c1,c2, txtN, D,geometry, plotGeometry,d, deltas)
