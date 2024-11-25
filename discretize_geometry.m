@@ -65,6 +65,11 @@ switch opts
 end
 if plotGeometry
     figure;
-    plot(x_node_glob, z_node_glob, '-o');     
+    plot(x_node_glob, z_node_glob, '-o');
+    hold on
+    grid on
+    xlabel('x [m]','FontSize', 16, 'Interpreter','latex')
+    ylabel('z [m]','FontSize', 16, 'Interpreter','latex')
+    title('Coordinates of the NACA airfoil','FontSize', 18, 'Interpreter','latex')
 end
 end
