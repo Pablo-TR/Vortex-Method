@@ -1,4 +1,5 @@
-function [distance,x_node_glob, z_node_glob, x_c_glob, z_c_glob, l_j, normals, tangents] = discretize_geometry(D, N,NACA_Data, opts, plotGeometry, txtN,c)
+function [distance, x_node_glob, z_node_glob, x_c_glob, z_c_glob, l_j, normals, tangents] = discretize_geometry(D, N,...
+    NACA_Data, opts, plotGeometry, txtN, c)
 switch opts
     case 'read' %% Read from csv
         x_c_glob = zeros(N-1,1);
