@@ -1,4 +1,4 @@
-function [cp, Cl, Cm] = computePart1(NACA_Data, nodes_NACA, alphas, Q_mod,c, txtN, D,geometry, plotGeometry)
+function [cp, Cl, Cm] = computePart1_1(NACA_Data, nodes_NACA, alphas, Q_mod,c, txtN, D,geometry, plotGeometry)
 
 Laitone = @(Cp0, M_inf) Cp0 / (sqrt(1 - M_inf^2) + (Cp0 / 2) * (M_inf^2 / sqrt(1 - M_inf^2)) * ...
         (1 + (1.4 - 1) *0.5* M_inf^2));

@@ -26,7 +26,8 @@ lh = 7.5;
 
 %% Called functions: %%
 %---------------------------------Part 1:---------------------------------
-computePart1(NACA_Data_1_1, nodes_NACA_1_1, alphas, Q_mod, c, txtN, D, geometry, plotGeometry);
-computePart2(NACA_Data_1_2, nodes_NACA_1_2, alphas, Q_mod, c1, c2, txtN, D, geometry, plotGeometry, d, deltas);
+computePart1_1(NACA_Data_1_1, nodes_NACA_1_1, alphas, Q_mod, c, txtN, D, geometry, plotGeometry);
+computePart1_2(NACA_Data_1_2, nodes_NACA_1_2, alphas, Q_mod, c1, c2, txtN, D, geometry, plotGeometry, d, deltas);
 
-%---------------------------------Part 2:---------------------------------
+%---------------------------------Part 2 (Prandtl):---------------------------------
+%computePart2()
