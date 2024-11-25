@@ -1,7 +1,7 @@
 clear; close all
 %% Read data: %%
-[NACA_Data_1_1, nodes_NACA_1_1] = read_data('NACA0015');
-[NACA_Data_1_2, nodes_NACA_1_2] = read_data('NACA0015');
+[NACA_Data_1_1, nodes_NACA_1_1] = read_data('NACA0015'); % 0015
+[NACA_Data_1_2, nodes_NACA_1_2] = read_data('NACA0015'); % 0015
 
 %% Geometry & initialization: %%
 Q_mod = 1;
@@ -19,7 +19,7 @@ d = 0.02;
 c1 = 0.63;
 c2 = 0.35;
 deltas = [0 4 8 12 16];
-txtN = 2;
+txtN = 3;
 %For part 3
 lv = 1;
 lh = 7.5;

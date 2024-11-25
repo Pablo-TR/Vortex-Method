@@ -68,6 +68,8 @@ if plotGeometry
     plot(x_node_glob, z_node_glob, '-o');
     hold on
     grid on
+    xlim([0 1])
+    ylim([-0.5 0.5])
     xlabel('x [m]','FontSize', 16, 'Interpreter','latex')
     ylabel('z [m]','FontSize', 16, 'Interpreter','latex')
     title('Coordinates of the NACA airfoil','FontSize', 18, 'Interpreter','latex')
