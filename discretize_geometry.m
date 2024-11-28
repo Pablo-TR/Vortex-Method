@@ -1,4 +1,5 @@
-function [distance,x_node_glob, z_node_glob, x_c_glob, z_c_glob, l_j, normals, tangents] = discretize_geometry(D, N,NACA_Data, opts, plotGeometry, txtN,c)
+function [distance, x_node_glob, z_node_glob, x_c_glob, z_c_glob, l_j, normals, tangents] = discretize_geometry(D, N,...
+    NACA_Data, opts, plotGeometry, txtN, c)
 switch opts
     case 'read' %% Read from csv
         x_c_glob = zeros(N-1,1);
@@ -64,6 +65,13 @@ switch opts
 end
 if plotGeometry
     figure;
-    plot(x_node_glob, z_node_glob, '-o');     
+    plot(x_node_glob, z_node_glob, '-o');
+    hold on
+    grid on
+    xlim([0 1])
+    ylim([-0.5 0.5])
+    xlabel('x [m]','FontSize', 16, 'Interpreter','latex')
+    ylabel('z [m]','FontSize', 16, 'Interpreter','latex')
+    title('Coordinates of the NACA airfoil','FontSize', 18, 'Interpreter','latex')
 end
 end
