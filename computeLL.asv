@@ -1,5 +1,5 @@
 function  [a, b] = computeLL(cp_coords, HS_coords, alpha, Q_inf, Cl0, Cl_alpha, thetai_1_2, ci_1_2, i_angle)
-    alpha = alpha + i_angle + delta; % i_angle needs to have its sign.
+    alpha_eff = alpha + i_angle;
     Q_mod = norm(Q_inf);
     i_inf = Q_inf./Q_mod;
     k_inf = [i_inf(3) i_inf(2) i_inf(1)];
