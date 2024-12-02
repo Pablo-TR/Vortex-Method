@@ -39,13 +39,13 @@ Cm2_all = cell(1, length(txtN));  % Per Cm
 %% Called functions: %%
 %---------------------------------Part 1:---------------------------------
 for k = 1:1:length(txtN)
-    [cp, Cl, Cm] = computePart1_1(NACA_Data_1_1, nodes_NACA_1_1, alphas, Q_mod, c, txtN, D,...
-    geometry, plotGeometry,k);
+%    [cp, Cl, Cm] = computePart1_1(NACA_Data_1_1, nodes_NACA_1_1, alphas, Q_mod, c, txtN, D,...
+%    geometry, plotGeometry,k);
 
     % Guardar els resultats en les cel·les
-    cp_all{k} = cp;
-    Cl_all{k} = Cl;
-    Cm_all{k} = Cm;
+%    cp_all{k} = cp;
+%    Cl_all{k} = Cl;
+%    Cm_all{k} = Cm;
   
     [cp1, Cl1, Cm1, cp2, Cl2, Cm2] = computePart1_2(NACA_Data_1_2, nodes_NACA_1_2, alphas, ...
     Q_mod, c1, c2, txtN, D, geometry, plotGeometry, d, deltas, k);

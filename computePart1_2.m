@@ -12,21 +12,21 @@ Cm1  = zeros(length(alphas),1);
 kuttaChange = floor((N)/4);
 
 cdef = c1+c2+d;
-
-for i = 1:1:length(alphas)
-    interference = 1;
-    alpha = alphas(i);
-    delta = 0;
-    tangents2 = tangents2_orig;
-    normals2 = normals2_orig;
-    [xc2, zc2] = computeElevatorCoords(delta, xc2_orig, zc2_orig, d, c1);
-    [xn2, zn2] = computeElevatorCoords(delta, xn2_orig, zn2_orig, d, c1);
-
-    [cp1(i,:), Cl1(i), Cm1(i)] = computeAerodynamicParams(alpha, xc, zc, xn, zn, xc2, zc2,...
-        xn2, zn2, normals, tangents, normals2, tangents2, N, lj1, lj2, Q_mod, cdef, kuttaChange, interference);
+%if false
+    for i = 1:1:length(alphas)
+        interference = 1;
+        alpha = alphas(i);
+        delta = 0;
+        tangents2 = tangents2_orig;
+        normals2 = normals2_orig;
+        [xc2, zc2] = computeElevatorCoords(delta, xc2_orig, zc2_orig, d, c1);
+        [xn2, zn2] = computeElevatorCoords(delta, xn2_orig, zn2_orig, d, c1);
     
-end
-
+        [cp1(i,:), Cl1(i), Cm1(i)] = computeAerodynamicParams(alpha, xc, zc, xn, zn, xc2, zc2,...
+            xn2, zn2, normals, tangents, normals2, tangents2, N, lj1, lj2, Q_mod, cdef, kuttaChange, interference);
+        
+    end
+%end
 cp2  = zeros(length(alphas),2*(N-1));
 Cl2  = zeros(length(alphas),1);
 Cm2  = zeros(length(alphas),1);
