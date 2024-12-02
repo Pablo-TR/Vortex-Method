@@ -1,9 +1,9 @@
-function computePart1_2(NACA_Data, nodes_NACA, alphas, Q_mod,c1,c2, txtN, D,geometry, plotGeometry, d, deltas)
-N = nodes_NACA(txtN);
+function [cp1, Cl1, Cm1, cp2, Cl2, Cm2] = computePart1_2(NACA_Data, nodes_NACA, alphas, Q_mod,c1,c2, txtN, D,geometry, plotGeometry, d, deltas, k)
+N = nodes_NACA(txtN(k));
 
-[~, xn, zn, xc, zc, lj1, normals, tangents] = discretize_geometry(D, N, NACA_Data, geometry, plotGeometry, txtN, c1);
+[~, xn, zn, xc, zc, lj1, normals, tangents] = discretize_geometry(D, N, NACA_Data, geometry, plotGeometry, txtN(k), c1);
 [~, xn2_orig, zn2_orig, xc2_orig, zc2_orig, lj2, normals2_orig, tangents2_orig] = discretize_geometry(D, N, NACA_Data,...
-    geometry, plotGeometry, txtN, c2);
+    geometry, plotGeometry, txtN(k), c2);
 
 cp1  = zeros(length(alphas),2*(N-1));
 Cl1  = zeros(length(alphas),1);
@@ -45,9 +45,6 @@ for i = 1:1:length(deltas)
         xc2, zc2, xn2, zn2,normals, tangents, normals2, tangents2, N, lj1, lj2, Q_mod, cdef, kuttaChange, interference);
 
 end
-
-
-
-
+%postprocess_part_1_2(cp1, Cl1, Cm1, cp2, Cl2, Cm2,alphas)
 
 end

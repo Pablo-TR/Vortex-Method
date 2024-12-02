@@ -1,11 +1,11 @@
-function [cp, Cl, Cm] = computePart1_1(NACA_Data, nodes_NACA, alphas, Q_mod,c, txtN, D,geometry, plotGeometry)
+function [cp, Cl, Cm] = computePart1_1(NACA_Data, nodes_NACA, alphas, Q_mod,c, txtN, D,geometry, plotGeometry, k)
 
 Laitone = @(Cp0, M_inf) Cp0 / (sqrt(1 - M_inf^2) + (Cp0 / 2) * (M_inf^2 / sqrt(1 - M_inf^2)) * ...
         (1 + (1.4 - 1) *0.5* M_inf^2));
 Cp_star = @(M_inf) (2 / (1.4 * M_inf^2)) * (((2 + (1.4 - 1) * M_inf^2) / (1 + 1.4))^(1.4 / (1.4 - 1)) - 1);
 
-N_W = nodes_NACA(txtN);
-[distance, xnWing, znWing, xcWing, zcWing, ljWing, normalsWing, tangentsWing] = discretize_geometry(D, N_W,NACA_Data,geometry,plotGeometry, txtN,c);
+N_W = nodes_NACA(txtN(k));
+[distance, xnWing, znWing, xcWing, zcWing, ljWing, normalsWing, tangentsWing] = discretize_geometry(D, N_W,NACA_Data,geometry,plotGeometry, txtN(k),c);
 
 kuttaChange = 33;
 
@@ -32,7 +32,7 @@ fprintf('\n')
 fprintf('%.4f ',Cm');
 fprintf('\n')
 
-postprocess_part_1(xcWing, cp, distance, gammas,xnWing, znWing, xcWing, zcWing, normalsWing, alphas) % Plots.
+%postprocess_part_1_1(xcWing, cp, distance, gammas,xnWing, znWing, xcWing, zcWing, normalsWing, alphas, Cl, Cm) % Plots.
 
 alphas_crit = [0 2 4];
 M_crit = zeros(length(alphas_crit), 1);
