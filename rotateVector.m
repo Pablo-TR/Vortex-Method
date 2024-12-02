@@ -1,7 +1,7 @@
 function [B] = rotateVector(delta, V)
     angle = -delta;
-    rotMat = [cos(angle) -sin(angle);
-              sin(angle) cos(angle)];
+    rotMat = [cosd(angle) -sind(angle);
+              sind(angle) cosd(angle)];
     B = rotMat*V';
     B = B';
 end
