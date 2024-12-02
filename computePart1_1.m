@@ -7,7 +7,7 @@ Cp_star = @(M_inf) (2 / (1.4 * M_inf^2)) * (((2 + (1.4 - 1) * M_inf^2) / (1 + 1.
 N_W = nodes_NACA(txtN(k));
 [distance, xnWing, znWing, xcWing, zcWing, ljWing, normalsWing, tangentsWing] = discretize_geometry(D, N_W,NACA_Data,geometry,plotGeometry, txtN(k),c);
 
-kuttaChange = 33;
+kuttaChange = floor(N_W/4); %33
 
 cp  = zeros(length(alphas),N_W-1);
 Cl  = zeros(length(alphas),1);
