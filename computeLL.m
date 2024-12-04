@@ -33,8 +33,11 @@ function  [a, b] = computeLL(cp_coords, HS_coords, alpha, Q_inf, Cl0, Cl_alpha, 
             end
             %Semi-infinite vortices            
 
-            Va = ((1/4*pi))*((1-dot(ur_semi,ur1))/(norm(cross(ur_semi,r1))^2))*(cross(ur_semi,r1));
-            Vb = ((1/4*pi))*((1-dot(ur_semi,ur2))/(norm(cross(ur_semi,r2))^2))*(cross(ur_semi,r2));
+            %Va = ((1/4*pi))*((1-dot(ur_semi,ur1))/(norm(cross(ur_semi,r1))^2))*(cross(ur_semi,r1));
+            Va = (1 - dot(ur_semi,ur1))*cross(ur_semi, r1)/(4*pi*(norm(cross(ur_semi, r1))^2));
+            Vb = (1 - dot(ur_semi,ur2))*cross(ur_semi, r2)/(4*pi*(norm(cross(ur_semi, r2))^2));
+            
+            %Vb = ((1/4*pi))*((1-dot(ur_semi,ur2))/(norm(cross(ur_semi,r2))^2))*(cross(ur_semi,r2));
             
             V = Va-Vb+Vab;
 
