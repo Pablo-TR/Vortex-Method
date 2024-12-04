@@ -1,4 +1,4 @@
-function [cp, Cl, Cm] = computePart1_1(NACA_Data, nodes_NACA, alphas, Q_mod,c, txtN, D,geometry, plotGeometry, k)
+function [cp, Cl, Cm, M_crit] = computePart1_1(NACA_Data, nodes_NACA, alphas, Q_mod,c, txtN, D,geometry, plotGeometry, k)
 
 Laitone = @(Cp0, M_inf) Cp0 / (sqrt(1 - M_inf^2) + (Cp0 / 2) * (M_inf^2 / sqrt(1 - M_inf^2)) * ...
         (1 + (1.4 - 1) *0.5* M_inf^2));
@@ -32,7 +32,7 @@ fprintf('\n')
 fprintf('%.4f ',Cm');
 fprintf('\n')
 
-%postprocess_part_1_1(xcWing, cp, distance, gammas,xnWing, znWing, xcWing, zcWing, normalsWing, alphas, Cl, Cm) % Plots.
+%postprocess_part_1_1(xcWing, cp, distance, gammas,xnWing, znWing, xcWing, zcWing, normalsWing, alphas) % Plots.
 
 alphas_crit = [0 2 4];
 M_crit = zeros(length(alphas_crit), 1);
@@ -76,4 +76,6 @@ fprintf('Cl compressible for NACA22112 at AoA 2 for Machs: ')
 fprintf('\n');
 fprintf('%.4f ', Cl_compressible);
 M_Cl_compresible = M_crit(2)-s;
+
+
 end
