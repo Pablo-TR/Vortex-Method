@@ -6,7 +6,8 @@ clear; close all
 %% Geometry & initialization: %%
 Q_mod = 1;
 alphas = [0 2 4 6 8];
-%alphas = 5;
+deltas = [0 4 8 12 16];
+txtN = [1 2 3 4 5]; % 1=32, 2=64, 3=128, 4=256, 5=512
 geometry = 'read';
 plotGeometry = false;
 D = 0;
@@ -18,11 +19,22 @@ c = 1;
 d = 0.02;
 c1 = 0.63;
 c2 = 0.35;
-deltas = [0 4 8 12 16];
-txtN = [1 2 3 4 5]; % 1=32, 2=64, 3=128, 4=256, 5=512
 %For part 3
+iw = 0;
+it = -2;
+Sv = 2.4;
 lv = 1;
 lh = 7.5;
+b = 24;
+bh = 5.6;
+crw = 1.8;
+crh = 1;
+ctw = 1.2;
+cth = 0.6;
+cdw = @(cl) 0.008*cl^2 - 0.0013*cl + 0.0063;
+cdth = @(cl) 0.0052*cl^2 + 0.0071*cl;
+cdtv = @(cl) 0.0062;
+
 cp_all = cell(1, length(txtN));  % Per cp
 Cl_all = cell(1, length(txtN));  % Per Cl
 Cm_all = cell(1, length(txtN));  % Per Cm
@@ -61,4 +73,19 @@ for k = 1:1:length(txtN)
 end
 
 %---------------------------------Part 2 (Prandtl):---------------------------------
-%computePart2()
+alpha = deg2rad(4);
+alphas(:) = deg2rad(alphas(:));
+delta = deg2rad(0);
+theta = [0 0];
+Q_inf = Q_mod*[cos(alpha),0,sin(alpha)];
+Cl_Wairfoil = Cl_all{end};
+Nhs = 64;
+%Cl_Tairfoil = 
+[CLw, Clw, alpha_indw, CD_indiw, CD_indw, CD_viw, CD_viscw, CDw, cp_coords] = ...
+    computePart2_1(Cl_Wairfoil, Nhs,b, 0, 0, Q_inf, theta, iw, alpha, alphas, crw, ctw, cdw);
+
+
+[CLw, CLt, Clw, Clt, alpha_indw, alpha_indt, CD_indiw, CD_indw, CD_indit, ...
+    CD_indt, CD_viw, CD_viscw, CD_vit, CD_visct, CDw, CDt] = ...
+    computePart2(Cl_Wairfoil, Cl_Tairfoil,  Nhs,b, bh, lv, lh , Q_inf, theta,...
+    iw, it, alpha, crw, ctw, crt, ctt, Cdt, cdw);

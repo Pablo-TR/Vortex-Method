@@ -28,7 +28,7 @@ function  [a, b] = computeLL(cp_coords, HS_coords, alpha, Q_inf, Cl0, Cl_alpha, 
             if r1_norm*r2_norm+dot(r1,r2) == 0 % To avoid computing i == j (denominator = 0)
                 Vab = 0;
             else
-                %Vab = (1/(4*pi))*(norm(r1)+norm(r2))*cross(r1,r2)/(norm(r1)*norm(r2)*(norm(r1)*norm(r2) + dot(r1,r2)));
+                Vab = (1/(4*pi))*(norm(r1)+norm(r2))*cross(r1,r2)/(norm(r1)*norm(r2)*(norm(r1)*norm(r2) + dot(r1,r2)));
                 Vab = (1/(4*pi))*((r1_norm +r2_norm)/((r1_norm*r2_norm)...
                     *(r1_norm*r2_norm+dot(r1,r2))))*cross(r1,r2);
             end

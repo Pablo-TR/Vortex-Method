@@ -15,5 +15,4 @@ function [cp_coords, HS_coords] = discretizeHorseshoe(b, N, h, L)
         cp_coords(i,:) =  0.5*(HS_coords(i,1:3) + HS_coords(i,4:6)); 
     end
     
-
 end

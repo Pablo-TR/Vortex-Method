@@ -52,15 +52,15 @@ grid minor
 
 
 
-%[cp_coords, HS_coords] = discretizeHorseshoe(ws, N, 0, 0);
-%c = computeSectionChord(cp_coords,cr,ct,ws);
-%theta = computeSectionTheta(cp_coords, 0, 0, ws);
-%[A, b] = computeLL(cp_coords, HS_coords, alpha, Q_inf,Cl0, cl_alpha, theta, c, iw);
-%gammas = A\b';
-%S = 2*((cr+ct)/2)*(ws/2);
-%CL3D = compute3DLift(gammas, Q_inf, S, HS_coords);
-%alpha_ind = computeInducedAlpha(gammas, Q_inf,c, Cl0_w, theta, alpha, iw, Cl_alpha_w);
-[CDi, CDI] = computeInducedDrag(gammas, HS_coords_w, alpha_ind_w, Q_inf,Sw);
+[cp_coords, HS_coords] = discretizeHorseshoe(ws, N, 0, 0);
+c = computeSectionChord(cp_coords,cr,ct,ws);
+theta = computeSectionTheta(cp_coords, 0, 0, ws);
+[A, b] = computeLL(cp_coords, HS_coords, alpha, Q_inf,cl0, cl_alpha, theta, c, iw);
+gammas = A\b';
+S = 2*((cr+ct)/2)*(ws/2);
+CL3D = compute3DLift(gammas, Q_inf, S, HS_coords);
+alpha_ind = computeInducedAlpha(gammas, Q_inf,c, Cl0_w, theta, alpha, iw, Cl_alpha_w);
+[CDi, CDI] = computeInducedDrag(gammas, HS_coords, alpha_ind, Q_inf,S);
 
 
 
