@@ -1,4 +1,4 @@
-function [CD_indi, CD_ind] = computeInducedDrag(gammas, HS_coords, alpha_ind, Q_inf)
+function [CD_indi, CD_ind] = computeInducedDrag(gammas, HS_coords, alpha_ind, Q_inf, S)
     Q_mod = norm(Q_inf);
     N = length(gammas);
     CD_indi = zeros(N,1);

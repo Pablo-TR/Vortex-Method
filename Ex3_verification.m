@@ -1,0 +1,20 @@
+clear all
+ws= 4.5;
+cr = 0.9;
+ct = 0.6;
+cl0 = 0.24;
+cl_alpha = 6.7;
+alpha = 0;
+alpha = deg2rad(alpha);
+N = 1;
+iw = 0;
+Q_inf = [1 0 0];
+[cp_coords, HS_coords] = discretizeHorseshoe(ws, N, 0, 0);
+c = computeSectionChord(cp_coords,cr,ct,ws);
+theta = computeSectionTheta(cp_coords, 0, 0, ws);
+[A, b] = computeLL(cp_coords, HS_coords, alpha, Q_inf,cl0, cl_alpha, theta, c, iw);
+gammas = A\b';
+S = 2*((cr+ct)/2)*(ws/2);
+CL3D = compute3DLift(gammas, Q_inf, S, HS_coords);
+alpha_ind = computeInducedAlpha(gammas, Q_inf,c, cl0, theta, alpha, iw, cl_alpha);
+CDi = computeInducedDrag(gammas, HS_coords, alpha_ind, Q_inf,S);
