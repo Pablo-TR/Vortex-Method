@@ -26,6 +26,7 @@ lh = 7.5;
 cp_all = cell(1, length(txtN));  % Per cp
 Cl_all = cell(1, length(txtN));  % Per Cl
 Cm_all = cell(1, length(txtN));  % Per Cm
+M_crit_all = cell(1, length(txtN));  % Per M_crit
 
 cp1_all = cell(1, length(txtN));  % Per cp
 Cl1_all = cell(1, length(txtN));  % Para Cl
@@ -36,17 +37,20 @@ Cl2_all = cell(1, length(txtN));  % Per Cl
 Cm2_all = cell(1, length(txtN));  % Per Cm
 
 
+
 %% Called functions: %%
 %---------------------------------Part 1:---------------------------------
 for k = 1:1:length(txtN)
-%    [cp, Cl, Cm] = computePart1_1(NACA_Data_1_1, nodes_NACA_1_1, alphas, Q_mod, c, txtN, D,...
-%    geometry, plotGeometry,k);
+    [cp, Cl, Cm, M_crit] = computePart1_1(NACA_Data_1_1, nodes_NACA_1_1, alphas, Q_mod, c, txtN, D,...
+    geometry, plotGeometry,k);
 
     % Guardar els resultats en les cel·les
-%    cp_all{k} = cp;
-%    Cl_all{k} = Cl;
-%    Cm_all{k} = Cm;
+    cp_all{k} = cp;
+    Cl_all{k} = Cl;
+    Cm_all{k} = Cm;
+    M_crit_all{k} = M_crit;
   
+    
     [cp1, Cl1, Cm1, cp2, Cl2, Cm2] = computePart1_2(NACA_Data_1_2, nodes_NACA_1_2, alphas, ...
     Q_mod, c1, c2, txtN, D, geometry, plotGeometry, d, deltas, k);
 
@@ -57,7 +61,14 @@ for k = 1:1:length(txtN)
     cp2_all{k} = cp2;
     Cl2_all{k} = Cl2;
     Cm2_all{k} = Cm2;
+    
 end
+
+postprocessConvergence1(M_crit_all, alphas, txtN, Cl_all, Cm_all)
+postprocessConvergence1(M_crit_all, alphas, txtN, Cl1_all, Cm1_all)
+postprocessConvergence1(M_crit_all, alphas, txtN, Cl2_all, Cm2_all)
+
+
 
 %---------------------------------Part 2 (Prandtl):---------------------------------
 %computePart2()
