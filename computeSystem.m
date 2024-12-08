@@ -1,4 +1,4 @@
-function [CLw, CLt, Clw, Clt, Cm0w, Cm0t, alpha_ind_w, alpha_ind_t, CD_indi_w, CD_ind_w, CD_indi_t, CD_ind_t, CD_vi_w, CD_visc_w, CD_vi_t, CD_visc_t, CDw, CDt, Cm0, CL, CD] = computeSystem(Cl_alpha_w, Cl0_w, Cl_alpha_t, Cl0_t,  Nhs,ws, ts, lv, lh, Q_inf, thetaw,thetat, iw, it, alpha, crw, ctw, cr_t, ct_t, Cdt, Cdw, Sv, CD_visc_v, Cm25w, Cm25t)
+function [CLw, CLt, Clw, Clt, Cm0w, Cm0t, alpha_ind_w, alpha_ind_t, CD_indi_w, CD_ind_w, CD_indi_t, CD_ind_t, CD_vi_w, CD_visc_w, CD_vi_t, CD_visc_t, CDw, CDt, Cm0, CL, CD, cp_coords_t] = computeSystem(Cl_alpha_w, Cl0_w, Cl_alpha_t, Cl0_t,  Nhs,ws, ts, lv, lh, Q_inf, thetaw,thetat, iw, it, alpha, crw, ctw, cr_t, ct_t, Cdt, Cdw, Sv, CD_visc_v, Cm25w, Cm25t)
     Sw = computeSurface(crw, ctw, ws);
     St = computeSurface(cr_t, ct_t, ts);
   

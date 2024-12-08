@@ -111,7 +111,7 @@ twists = 0;
 for i = 1:1:length(twists)
     theta = twists(i);
     thetaw = [deg2rad(0) deg2rad(theta)]; % Leave first value at 0
-[CLw, Clw, alpha_indw, CD_indiw, CD_ind, CD_viw, CD_v, CDw, cp_coords] = ...
+[CLw, Clw, alpha_indw, CD_indiw, CD_ind, CD_viw, CD_v, CDw, cp_coords_w] = ...
     computeSingleWing(Cl_alpha_w, Cl0_w, Nhs,b, 0, 0, Q_inf, thetaw, iw, alpha, crw, ctw, cdw);
 CL_CD(i) = CLw/CDw;
 end
@@ -131,9 +131,10 @@ theta = 0; % PUT THE VALUE FROM 1 HERE
 alpha = deg2rad(4);
 
 [CLw, CLt, Clw, Clt, Cm0w, Cm0t, alpha_indw, alpha_indt, CD_indiw, CD_indw, CD_indit, ...
-    CD_indt, CD_viw, CD_viscw, CD_vit, CD_visct, CDw, CDt, Cm0, CL, CD] = ...
+    CD_indt, CD_viw, CD_viscw, CD_vit, CD_visct, CDw, CDt, Cm0, CL, CD, cp_coords_t] = ...
     computeSystem(Cl_alpha_w, Cl0_w, Cl_alpha_t, Cl0_t,  Nhs,b, bh, lv, lh , Q_inf, thetaw,thetat,...
     iw, it, alpha, crw, ctw, crh, cth, cdth, cdw, Sv, cdtv, Cm25w ,Cm25t);
+[cg] = postprocess_part_2_2(Clw, Clt, CD_indiw, CD_indit, CD_viw, CD_vit, cp_coords_w(:,2), cp_coords_t(:,2));
 %%
 %3. For a range of angles of attack 0°- 6°, and zero elevator deflection, plot the
 % aerodynamic polar curve (CL vs CD).
