@@ -75,7 +75,7 @@ end
 
 %---------------------------------Part 2 (Prandtl):---------------------------------
 
-Nhs = 512;
+Nhs = 10;
 alpha = deg2rad(4);
 Q_inf = Q_mod*[cos(alpha),0,sin(alpha)];
 thetat = [deg2rad(0) deg2rad(0)]; % thetat SHOULD NOT BE CHANGED
@@ -138,27 +138,27 @@ for i = 1:1:length(alphas)-1
     alpha = alphas(i);
     [~, ~, ~, ~, ~, ~, ~, ~, ~, ...
         ~, ~, ~, ~, ~, ~, ~, ~, CL, CD] = ...
-        computeSystem(Cl_alpha_w, Cl0_w, Cl_alpha_t, Cl0_t,  Nhs,b, bh, lv, lh , Q_inf, theta,...
-        iw, it, alpha, crw, ctw, crh, cth, cdth, cdw);
+        computeSystem(Cl_alpha_w, Cl0_w, Cl_alpha_t, Cl0_t,  Nhs,b, bh, lv, lh , Q_inf, thetaw,thetat,...
+    iw, it, alpha, crw, ctw, crh, cth, cdth, cdw, Sv, cdtv, Cm25w ,Cm25t);
 end
 %%
 %4. Compute the global lift coefficient and pitching moment coefficient about the CM
 %when alpha = 4° the elevator deflection is d= 12°.
 alphas = [0,2,4,6,8];
-delta = 12;
+deltas = [12];
 fixDeltaTo0 = 0;
- [~, ~, ~, ~, Cl2, Cm2] = computePart1_2(NACA_Data_1_2, nodes_NACA_1_2, alphas, ...
+ [~, Cld, ~, ~, Cl2, Cm2] = computePart1_2(NACA_Data_1_2, nodes_NACA_1_2, alphas, ...
     Q_mod, c1, c2, txtN, D, geometry, plotGeometry, d, deltas, k, fixDeltaTo0);
 
 alpha = deg2rad(4);
 alphas = deg2rad(alphas(:));
-Cl_law = fit(alphas', Cl_law, 'poly1');
+Cl_law = fit(alphas, Cld, 'poly1');
 Cl_alpha_t= Cl_law.p1;
 Cl0_t = Cl_law.p2;
 Cm25t = Cm2_all{end}(end);
 
 [~, ~, ~, ~, ~, ~, ~, ~, ~, ...
     ~, ~, ~, ~, ~, ~, ~, Cm, CL, CD] = ...
-    computeSystem(Cl_alpha_w, Cl0_w, Cl_alpha_t, Cl0_t,  Nhs,b, bh, lv, lh , Q_inf, theta,...
-    iw, it, alpha, crw, ctw, crh, cth, cdth, cdw);
+    computeSystem(Cl_alpha_w, Cl0_w, Cl_alpha_t, Cl0_t,  Nhs,b, bh, lv, lh , Q_inf, thetaw,thetat,...
+    iw, it, alpha, crw, ctw, crh, cth, cdth, cdw, Sv, cdtv, Cm25w ,Cm25t);
 %Cm is referred to the Origin, not the center of mass

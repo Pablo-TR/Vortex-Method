@@ -17,6 +17,8 @@ cdef = c1+c2+d;
         alpha = alphas(i);
         if fixDeltaTo0
             delta = 0;
+        else
+            delta  = deltas(end);
         end
         tangents2 = tangents2_orig;
         normals2 = normals2_orig;
@@ -30,20 +32,20 @@ cp2  = zeros(length(alphas),2*(N-1));
 Cl2  = zeros(length(alphas),1);
 Cm2  = zeros(length(alphas),1);
 
-
-for i = 1:1:length(deltas)
-
-    interference = 1;
-    alpha = 4;
-    delta = deltas(i);
-    [xc2, zc2] = computeElevatorCoords(delta, xc2_orig, zc2_orig, d, c1);
-    [xn2, zn2] = computeElevatorCoords(delta, xn2_orig, zn2_orig, d, c1);
+if fixDeltaTo0
+    for i = 1:1:length(deltas)
     
-    tangents2 = rotateVector(delta, tangents2_orig);
-    normals2 = rotateVector(delta, normals2_orig);
-    [cp2(i,:), Cl2(i), Cm2(i)] = computeAerodynamicParams(alpha,xc, zc, xn, zn,...
-        xc2, zc2, xn2, zn2,normals, tangents, normals2, tangents2, N, lj1, lj2, Q_mod, cdef, kuttaChange, interference);
-
+        interference = 1;
+        alpha = 4;
+        delta = deltas(i);
+        [xc2, zc2] = computeElevatorCoords(delta, xc2_orig, zc2_orig, d, c1);
+        [xn2, zn2] = computeElevatorCoords(delta, xn2_orig, zn2_orig, d, c1);
+        
+        tangents2 = rotateVector(delta, tangents2_orig);
+        normals2 = rotateVector(delta, normals2_orig);
+        [cp2(i,:), Cl2(i), Cm2(i)] = computeAerodynamicParams(alpha,xc, zc, xn, zn,...
+            xc2, zc2, xn2, zn2,normals, tangents, normals2, tangents2, N, lj1, lj2, Q_mod, cdef, kuttaChange, interference);
+    end
 end
 
 end
