@@ -1,8 +1,7 @@
-function aerodynamic_coef_plot(coef1, coef2, coords_w, coords_t, plot_tag, axis_tag)
+function aerodynamic_coef_plot(coef1, coords_w, plot_tag, axis_tag, lim)
     figure;
     hold on;
-    plot(coords_w, coef1, '-o', 'DisplayName', 'Wing', 'LineWidth', 1);
-    plot(coords_t, coef2, '-x', 'DisplayName', 'Tail', 'LineWidth', 1);
+    plot(coords_w, coef1, '-', 'DisplayName', 'Wing', 'LineWidth', 1);
     hold off;
     
     % Customize the plot
@@ -10,8 +9,7 @@ function aerodynamic_coef_plot(coef1, coef2, coords_w, coords_t, plot_tag, axis_
           'Interpreter', 'latex', 'FontSize', 14);
     xlabel('Wing span position', 'FontSize', 12);
     ylabel(axis_tag, 'FontSize', 12);
-    legend('show', 'Location', 'best');
-    xlim([-12, 12]);
+    xlim([-lim/2, lim/2]);
     grid on;
     box on;
 end

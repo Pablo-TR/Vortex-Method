@@ -134,7 +134,7 @@ alpha = deg2rad(4);
     CD_indt, CD_viw, CD_viscw, CD_vit, CD_visct, CDw, CDt, Cm0, CL, CD, cp_coords_t] = ...
     computeSystem(Cl_alpha_w, Cl0_w, Cl_alpha_t, Cl0_t,  Nhs,b, bh, lv, lh , Q_inf, thetaw,thetat,...
     iw, it, alpha, crw, ctw, crh, cth, cdth, cdw, Sv, cdtv, Cm25w ,Cm25t);
-[cg] = postprocess_part_2_2(Clw, Clt, CD_indiw, CD_indit, CD_viw, CD_vit, cp_coords_w(:,2), cp_coords_t(:,2));
+[cg] = postprocess_part_2_2(Clw, Clt, CD_indiw, CD_indit, CD_viw, CD_vit, cp_coords_w(:,2), cp_coords_t(:,2), b, bh);
 %%
 %3. For a range of angles of attack 0°- 6°, and zero elevator deflection, plot the
 % aerodynamic polar curve (CL vs CD).
