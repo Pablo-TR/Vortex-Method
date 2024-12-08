@@ -1,0 +1,18 @@
+function postprocess_Part2_Polar(CL_values,CD_values)
+    figure;
+    CL_fine = min(CL_values):0.25:max(CL_values)
+    CD_fine=spline(CL_values,CD_values,CL_fine);
+
+    CD_smooth = spline(CL_values, CD_values, CL_fine);       % Interpolación spline
+    
+    % Graficar
+    scatter(CL_values, CD_values, 'b*'); % Puntos originales
+    hold on;
+    plot(CL_fine, CD_smooth, 'r-', 'LineWidth', 1.5); % Curva spline
+    hold off;
+    xlabel('CL');
+    ylabel('CD');
+    legend('Datos originales', 'Curva spline');
+    grid on;
+
+end

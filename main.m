@@ -38,6 +38,7 @@ cdtv = 0.0062;
 cp_all = cell(1, length(txtN));  % Per cp
 Cl_all = cell(1, length(txtN));  % Per Cl
 Cm_all = cell(1, length(txtN));  % Per Cm
+M_crit_all = cell(1, length(txtN));  % Per M_crit
 
 cp1_all = cell(1, length(txtN));  % Per cp
 Cl1_all = cell(1, length(txtN));  % Para Cl
@@ -51,13 +52,14 @@ Cm2_all = cell(1, length(txtN));  % Per Cm
 %% Called functions: %%
 %---------------------------------Part 1:---------------------------------
 for k = 1:1:length(txtN)
-    [cp, Cl, Cm] = computePart1_1(NACA_Data_1_1, nodes_NACA_1_1, alphas, Q_mod, c, txtN, D,...
+    [cp, Cl, Cm, M_crit] = computePart1_1(NACA_Data_1_1, nodes_NACA_1_1, alphas, Q_mod, c, txtN, D,...
     geometry, plotGeometry,k);
 
     % Guardar els resultats en les cel·les
     cp_all{k} = cp;
     Cl_all{k} = Cl;
     Cm_all{k} = Cm;
+    M_crit_all{k} = M_crit;
     
     fixDeltaTo0 = 1; % Works fine don't get confused by the name
     [cp1, Cl1, Cm1, cp2, Cl2, Cm2] = computePart1_2(NACA_Data_1_2, nodes_NACA_1_2, alphas, ...
@@ -72,6 +74,9 @@ for k = 1:1:length(txtN)
     Cm2_all{k} = Cm2;
 
 end
+%postprocessConvergence1(M_crit_all, alphas, txtN, Cl_all, Cm_all)
+%postprocessConvergence1(M_crit_all, alphas, txtN, Cl1_all, Cm1_all)
+%postprocessConvergence1(M_crit_all, alphas, txtN, Cl2_all, Cm2_all)
 
 %---------------------------------Part 2 (Prandtl):---------------------------------
 
@@ -92,7 +97,6 @@ Cl_law = fit(alphasR, Cl_law, 'poly1');
 
 Cl_alpha_t = Cl_law.p1;
 Cl0_t = 0;Cl_law.p2;
-
 
 Cm25w = Cm_all{end}(3);
 Cm25t = Cm1_all{end}(3);
@@ -134,13 +138,22 @@ alpha = deg2rad(4);
 %3. For a range of angles of attack 0°- 6°, and zero elevator deflection, plot the
 % aerodynamic polar curve (CL vs CD).
 
+CL_values = zeros(1, length(alphas) - 1); % Array per emmagatzemar CL
+CD_values = zeros(1, length(alphas) - 1); % Array per emmagatzemar CD
+
+
 for i = 1:1:length(alphas)-1
     alpha = alphas(i);
     [~, ~, ~, ~, ~, ~, ~, ~, ~, ...
         ~, ~, ~, ~, ~, ~, ~, ~, CL, CD] = ...
         computeSystem(Cl_alpha_w, Cl0_w, Cl_alpha_t, Cl0_t,  Nhs,b, bh, lv, lh , Q_inf, thetaw,thetat,...
     iw, it, alpha, crw, ctw, crh, cth, cdth, cdw, Sv, cdtv, Cm25w ,Cm25t);
+    CL_values(i) = CL;
+    CD_values(i) = CD;
 end
+
+[CL_fine, CD_fine] = postprocess_Part2_Polar(CL_values,CD_values);
+
 %%
 %4. Compute the global lift coefficient and pitching moment coefficient about the CM
 %when alpha = 4° the elevator deflection is d= 12°.
