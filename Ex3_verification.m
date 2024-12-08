@@ -1,16 +1,17 @@
 clear all
-ws= 4.5;
-cr = 0.9;
-ct = 0.6;
-Cl0_w = 0.24;
-Cl_alpha_w = 6.7;
-alpha = 0;
+ws= 12;
+cr = 1.8;
+ct = 1.2;
+
+Cl0_w = 0.2624;
+Cl_alpha_w = 6.7743;
+alpha = 4;
 alpha = deg2rad(alpha);
-N = 512;
+N = 256;
 iw = 0;
 cd = @(cl) 0.0052*cl^2 + 0.0071*cl;
 Q_inf = [1 0 0];
-theta = [0 0];
+theta = [0 deg2rad(-3.5)];
 Sw = computeSurface(cr, ct, ws);
 
 [cp_coords_w, HS_coords_w]= discretizeHorseshoe(ws, N, 0, 0);
@@ -18,8 +19,8 @@ Sw = computeSurface(cr, ct, ws);
 thetaw = computeSectionTheta(cp_coords_w, theta(1), theta(2), ws);
 
 cw = computeSectionChord(cp_coords_w, cr, ct, ws);
-
-[A, b] = computeLL(cp_coords_w, HS_coords_w, alpha, Q_inf, Cl0_w, Cl_alpha_w, thetaw, cw, iw); 
+OutOfFoil = 0;
+[A, b] = computeLL(cp_coords_w, HS_coords_w, alpha, Q_inf, Cl0_w, Cl_alpha_w, thetaw, cw, iw, OutOfFoil); 
 
 gammas = A\b';
 
@@ -27,7 +28,7 @@ CLw = compute3DLift(gammas, Q_inf, Sw, HS_coords_w);
 
 [alpha_ind_w, Clw] = computeInducedAlpha(gammas, Q_inf, cw, Cl0_w, thetaw, alpha, iw, Cl_alpha_w);
 
-[CD_indiw, CD_indw] = computeInducedDrag(gammas, HS_coords_w, alpha_ind_w, Q_inf, Sw);
+[CD_indiw, CD_indw] = computeInducedDrag(gammas, HS_coords_w, alpha_ind_w, Q_inf, Sw, Clw);
 
 close all
 figure()

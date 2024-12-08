@@ -1,5 +1,4 @@
 function [cp_coords, HS_coords] = discretizeHorseshoe(b, N, h, L)
-%ADRI DICE: CUIDAO con b
     HS_coords = zeros(N, 6);
     cp_coords = zeros(N, 3);
 

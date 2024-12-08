@@ -8,8 +8,8 @@ function [cp, Cl, Cm]  = computeAerodynamicParams(alpha, xc, zc, xn, zn, xc2, zc
     
     [A11,b11, ~] = precompute_terms(normals, tangents, N, Q_inf, xc, zc, xn,zn, lj1, 0);
     [A22,b22, ~] = precompute_terms(normals2, tangents2, N, Q_inf, xc2, zc2, xn2,zn2, lj2,0);
-    [A12,~, ~] = precompute_terms(normals2, tangents2, N, Q_inf, xc, zc, xn2,zn2, lj2,1);
-    [A21,~, ~] = precompute_terms(normals, tangents, N, Q_inf, xc2, zc2, xn,zn, lj1,1);
+    [A12,~, ~] = precompute_terms(normals2, tangents, N, Q_inf, xc, zc, xn2,zn2, lj2,1);
+    [A21,~, ~] = precompute_terms(normals, tangents2, N, Q_inf, xc2, zc2, xn,zn, lj1,1);
         
     A(1:N-1, 1:N-1) = A11;
     A(1:N-1, N:2*(N-1)) = A12;

@@ -19,7 +19,7 @@ for i = 1:1:length(alphas)
     [~,~,~,~,gammas] = applyVortexMethod(Q_inf, normalsWing, tangentsWing,N_W, xcWing, zcWing, xnWing,znWing, ljWing, kuttaChange,0);
     cp(i,:) = computeCP(gammas, Q_inf);
     Cl(i) = computeCl(gammas, ljWing,Q_inf,c);
-    Cm(i) = computeCm(cp(i,:), xcWing, zcWing,xnWing, znWing, c);
+    Cm(i) = computeCm(cp(i,:), xcWing, zcWing,xnWing, znWing, c);                      
 end
 
 fprintf('Cl for NACA22112 at AoAs of: ')

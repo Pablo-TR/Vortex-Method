@@ -4,7 +4,8 @@ function [alpha_ind, Cl] = computeInducedAlpha(gammas, Q_inf, c, Cl0, theta, alp
     alpha_ind = zeros(N,1); 
     Cl = zeros(N,1);
     for i = 1:1:N
+        alpha_eff = alpha + ind_angle + theta(i);
         Cl(i) = (2*gammas(i))/(c(i)*Q_mod);
-        alpha_ind(i) = ((Cl(i)-Cl0)/Cl_alpha) - alpha - theta(i) - ind_angle;
+        alpha_ind(i) = ((Cl(i)-Cl0)/Cl_alpha) - alpha_eff ;
     end
 end

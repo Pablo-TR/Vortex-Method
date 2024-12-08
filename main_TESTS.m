@@ -4,10 +4,10 @@ clear; close all
 [NACA_Data_1_2, nodes_NACA_1_2] = read_data('NACA0015'); % 0015
 
 %% Geometry & initialization: %%
-Q_mod = 1;
+Q_mod = 10;
 alphas = [0 2 4 6 8];
 deltas = [0 4 8 12 16];
-txtN = [1 2 3 4 5]; % 1=32, 2=64, 3=128, 4=256, 5=512
+txtN = [1]; % 1=32, 2=64, 3=128, 4=256, 5=512
 geometry = 'read';
 plotGeometry = false;
 D = 0;
@@ -21,18 +21,18 @@ c1 = 0.63;
 c2 = 0.35;
 %For part 3
 iw = deg2rad(0);
-it = deg2rad(-2);
+it = deg2rad(2);
 Sv = 2.4;
-lv = 1;
-lh = 7.5;
-b = 24;
-bh = 5.6;
+lv = 0;
+lh = 6;
+b = 12;
+bh = 4.8;
 crw = 1.8;
-crh = 1;
+crh = 0.9;
 ctw = 1.2;
 cth = 0.6;
-cdw = @(cl) 0.008+0.0063*cl^2 -0.0013*cl ;
-cdth = @(cl) 0.0052*cl^2 + 0.0071;
+cdth = @(cl) 0.0075+0.0055*cl^2 ;%0.008*cl^2 - 0.0013*cl + 0.0063;
+cdw = @(cl) 0.0063 + 0.0067*cl^2 -0.0033*cl;%0.0052*cl^2 + 0.0071*cl;
 cdtv = 0.0062;
 
 cp_all = cell(1, length(txtN));  % Per cp
@@ -75,43 +75,37 @@ end
 
 %---------------------------------Part 2 (Prandtl):---------------------------------
 
-Nhs = 512;
+Nhs = 256;
 alpha = deg2rad(4);
 Q_inf = Q_mod*[cos(alpha),0,sin(alpha)];
 thetat = [deg2rad(0) deg2rad(0)]; % thetat SHOULD NOT BE CHANGED
 
-alphasR = deg2rad(alphas(:));
-Cl_law = Cl_all{end};
-Cl_law = fit(alphasR, Cl_law, 'poly1');
 
-Cl_alpha_w =Cl_law.p1;
-Cl0_w = Cl_law.p2;
+%Cl_law = Cl_all{end};
+%Cl_law = fit(alphas', Cl_law, 'poly1');
 
-Cl_law = Cl1_all{end};
-Cl_law = fit(alphasR, Cl_law, 'poly1');
+Cl_alpha_t = 6.6878;%Cl_law.p1;
+Cl0_t = 0.0023;%Cl_law.p2;
 
-Cl_alpha_t = Cl_law.p1;
-Cl0_t = 0;Cl_law.p2;
+Cl_alpha_w = 6.7743;%Cl_law.p1;
+Cl0_w = 0.2624;%Cl_law.p2;
 
-
-Cm25w = Cm_all{end}(3);
-Cm25t = Cm1_all{end}(3);
+Cm25w = -0.0653;
+Cm25t = -0.0082;
 
 %%
 %1. Select and justify an adequate wing twist, and plot the spanwise distribution of the
 %local coefficients of lift (Clw), viscous drag (CD_viscw), induced drag (CD_indw)
 % and induced angle of attack (alpha_indw).
 alpha = deg2rad(4);
-CL_CD = [];
-twists = 0;
+twists = [-3.5];
 for i = 1:1:length(twists)
     theta = twists(i);
     thetaw = [deg2rad(0) deg2rad(theta)]; % Leave first value at 0
-[CLw, Clw, alpha_indw, CD_indiw, CD_ind, CD_viw, CD_v, CDw, cp_coords] = ...
-    computeSingleWing(Cl_alpha_w, Cl0_w, Nhs,b, 0, 0, Q_inf, thetaw, iw, alpha, crw, ctw, cdw);
-CL_CD(i) = CLw/CDw;
+
+[~, Clw, alpha_indw, CD_indiw, ~, CD_viw, ~, ~, cp_coords] = ...
+    computeSingleWing(Cl_alpha_w, Cl0_w, Nhs,b, lv, lh, Q_inf, thetaw, iw, alpha, crw, ctw, cdw);
 end
-plot(twists, CL_CD)
 
 alphas(:) = deg2rad(alphas(:));
 %%
@@ -127,7 +121,7 @@ theta = 0; % PUT THE VALUE FROM 1 HERE
 alpha = deg2rad(4);
 
 [CLw, CLt, Clw, Clt, Cm0w, Cm0t, alpha_indw, alpha_indt, CD_indiw, CD_indw, CD_indit, ...
-    CD_indt, CD_viw, CD_viscw, CD_vit, CD_visct, CDw, CDt, Cm0, CL, CD] = ...
+    CD_indt, CD_viw, CD_viscw, CD_vit, CD_visct, CDw, CDt, Cm, CL, CD] = ...
     computeSystem(Cl_alpha_w, Cl0_w, Cl_alpha_t, Cl0_t,  Nhs,b, bh, lv, lh , Q_inf, thetaw,thetat,...
     iw, it, alpha, crw, ctw, crh, cth, cdth, cdw, Sv, cdtv, Cm25w ,Cm25t);
 %%
@@ -136,10 +130,11 @@ alpha = deg2rad(4);
 
 for i = 1:1:length(alphas)-1
     alpha = alphas(i);
-    [~, ~, ~, ~, ~, ~, ~, ~, ~, ...
-        ~, ~, ~, ~, ~, ~, ~, ~, CL, CD] = ...
-        computeSystem(Cl_alpha_w, Cl0_w, Cl_alpha_t, Cl0_t,  Nhs,b, bh, lv, lh , Q_inf, theta,...
-        iw, it, alpha, crw, ctw, crh, cth, cdth, cdw);
+    [CLw, CLt, Clw, Clt, Cm0w, Cm0t, alpha_indw, alpha_indt, CD_indiw, CD_indw, CD_indit, ...
+    CD_indt, CD_viw, CD_viscw, CD_vit, CD_visct, CDw, CDt, Cm, CL, CD] = ...
+    computeSystem(Cl_alpha_w, Cl0_w, Cl_alpha_t, Cl0_t,  Nhs,b, bh, lv, lh,...
+    Q_inf, thetaw,thetat, iw, it, alpha, crw, ctw, crh, cth, cdth, cdw, Sv,...
+    cdtv, Cm25w ,Cm25t);    
 end
 %%
 %4. Compute the global lift coefficient and pitching moment coefficient about the CM
@@ -155,7 +150,6 @@ alphas = deg2rad(alphas(:));
 Cl_law = fit(alphas', Cl_law, 'poly1');
 Cl_alpha_t= Cl_law.p1;
 Cl0_t = Cl_law.p2;
-Cm25t = Cm2_all{end}(end);
 
 [~, ~, ~, ~, ~, ~, ~, ~, ~, ...
     ~, ~, ~, ~, ~, ~, ~, Cm, CL, CD] = ...
