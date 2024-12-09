@@ -31,7 +31,7 @@ crw = 1.8;
 crh = 1;
 ctw = 1.2;
 cth = 0.6;
-cdw = @(cl) 0.008+0.0063*cl^2 -0.0013*cl ;
+cdw = @(cl) 0.008*cl^2+0.0063 -0.0013*cl ;
 cdth = @(cl) 0.0052*cl^2 + 0.0071;
 cdtv = 0.0062;
 
@@ -80,7 +80,7 @@ end
 
 %---------------------------------Part 2 (Prandtl):---------------------------------
 
-Nhs = 10;
+Nhs = 512;
 alpha = deg2rad(4);
 Q_inf = Q_mod*[cos(alpha),0,sin(alpha)];
 thetat = [deg2rad(0) deg2rad(0)]; % thetat SHOULD NOT BE CHANGED
@@ -107,7 +107,7 @@ Cm25t = Cm1_all{end}(3);
 % and induced angle of attack (alpha_indw).
 alpha = deg2rad(4);
 CL_CD = [];
-twists = 0;
+twists = -8:0.1:8;
 for i = 1:1:length(twists)
     theta = twists(i);
     thetaw = [deg2rad(0) deg2rad(theta)]; % Leave first value at 0
