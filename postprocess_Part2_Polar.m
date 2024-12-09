@@ -4,6 +4,9 @@ function [CL_fine, CD_fine] = postprocess_Part2_Polar(CL_values, CD_values)
     CL_values_sorted = CL_values(idx);
 
     % Generar la curva usando pchip
+    p = polyfit(CD, CL, 2);
+    
+    
     CD_fine = linspace(min(CD_values_sorted), max(CD_values_sorted), 500);
     CL_fine = spline(CD_values_sorted, CL_values_sorted, CD_fine);
 

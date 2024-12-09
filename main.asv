@@ -108,7 +108,7 @@ Cm25t = Cm1_all{end}(3);
 % and induced angle of attack (alpha_indw).
 alpha = deg2rad(4);
 CL_CD = [];
-twists = [-0.9];
+twists = -8:0.1:8;
 Clw_all = cell(1, length(twists));
 CDviw_all = cell(1, length(twists));
 CDindiw_all = cell(1, length(twists));
@@ -120,12 +120,10 @@ for i = 1:1:length(twists)
 [CLw, Clw, alpha_indw, CD_indiw, CD_ind, CD_viw, CD_v, CDw, cp_coords_w] = ...
     computeSingleWing(Cl_alpha_w, Cl0_w, Nhs,b, 0, 0, Q_inf, thetaw, iw, alpha, crw, ctw, cdw);
 Clw_all{i} = Clw;
-CL_CD(i) = CLw/CDw;
-CDviw_all{i} = CD_viw;
-CDindiw_all{i} = CD_indiw;
-alphaIndw_all{i} = alpha_indw;
+CL_CD(i) = CL/CD;
 end
-postprocess_part_2_1(alphaIndw_all,CL_CD,CDindiw_all, CDviw_all, Clw_all, cp_coords_w(:,2), twists)
+plot(twists,CL_CD)
+%postprocess_part_2_1(Clw_all,CD_indiw, CD_viw, cp_coords_w(:,2))
 
 
 
@@ -141,14 +139,12 @@ alphas(:) = deg2rad(alphas(:));
 
 theta = -0.9; % PUT THE VALUE FROM 1 HERE
 alpha = deg2rad(4);
-lambda = ctw/crw;
-MAC = (2/3) * crw * ((1+lambda+lambda^2)/(1+lambda));
 
 [CLw, CLt, Clw, Clt, Cm0w, Cm0t, alpha_indw, alpha_indt, CD_indiw, CD_indw, CD_indit, ...
     CD_indt, CD_viw, CD_viscw, CD_vit, CD_visct, CDw, CDt, Cm0, CL, CD, cp_coords_t] = ...
     computeSystem(Cl_alpha_w, Cl0_w, Cl_alpha_t, Cl0_t,  Nhs,b, bh, lv, lh , Q_inf, thetaw,thetat,...
     iw, it, alpha, crw, ctw, crh, cth, cdth, cdw, Sv, cdtv, Cm25w ,Cm25t);
-[cg] = postprocess_part_2_2(Clw, Clt, CD_indiw, CD_indit, CD_viw, CD_vit, cp_coords_w(:,2), cp_coords_t(:,2), b, bh, CL, Cm0, MAC, Sw, Q_mod);
+[cg] = postprocess_part_2_2(Clw, Clt, CD_indiw, CD_indit, CD_viw, CD_vit, cp_coords_w(:,2), cp_coords_t(:,2), b, bh, CL, Cm0, c, Sw, Q_mod);
 
 
 
@@ -162,7 +158,8 @@ CD_values = zeros(1, length(alphas) - 1); % Array per emmagatzemar CD
 
 for i = 1:1:length(alphas)-1
     alpha = alphas(i);
-    [~, ~, ~, ~, ~, ~, ~, ~, ~, ~, ~, ~, ~, ~, ~, ~, ~, ~, ~, CL, CD, ~] = ...
+    [~, ~, ~, ~, ~, ~, ~, ~, ~, ...
+        ~, ~, ~, ~, ~, ~, ~, ~, CL, CD] = ...
         computeSystem(Cl_alpha_w, Cl0_w, Cl_alpha_t, Cl0_t,  Nhs,b, bh, lv, lh , Q_inf, thetaw,thetat,...
     iw, it, alpha, crw, ctw, crh, cth, cdth, cdw, Sv, cdtv, Cm25w ,Cm25t);
     CL_values(i) = CL;
