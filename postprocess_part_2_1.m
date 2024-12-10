@@ -1,7 +1,7 @@
 function postprocess_part_2_1(alphaIndw_all,CL_CD,CDindiw_all, CDviw_all, Clw_all, cp_coords_w,twists)
     idx = find(CL_CD == max(CL_CD));
     
-    figure()
+    figure(
     plot(twists, CL_CD);
     title('Efici``encia aerodin``amica vs torsi\''o','FontSize',18,'Interpreter','latex')
     xlabel('Torsi\''o [$\circ$]', 'FontSize', 16, 'Interpreter', 'latex');
