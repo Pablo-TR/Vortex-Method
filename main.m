@@ -152,7 +152,7 @@ MAC = (2/3) * crw * ((1+lambda+lambda^2)/(1+lambda));
 
 
 
-
+%%
 %3. For a range of angles of attack 0°- 6°, and zero elevator deflection, plot the
 % aerodynamic polar curve (CL vs CD).
 
