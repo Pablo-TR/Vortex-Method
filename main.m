@@ -192,3 +192,4 @@ Cm25t = Cm2_all{end}(end);
     computeSystem(Cl_alpha_w, Cl0_w, Cl_alpha_t, Cl0_t,  Nhs,b, bh, lv, lh , Q_inf, thetaw,thetat,...
     iw, it, alpha, crw, ctw, crh, cth, cdth, cdw, Sv, cdtv, Cm25w ,Cm25t);
 %Cm is referred to the Origin, not the center of mass
+Cm_cg = CL*cg/MAC + Cm;
